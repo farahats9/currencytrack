@@ -14,10 +14,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    pairs << "USD_EGP" << "BTC_USD";
-    lastValues = {1000,1000};
-    makeDisplays();
+
     readSettings();
+    makeDisplays();
     manager = new QNetworkAccessManager(this);
     connect(manager, &QNetworkAccessManager::finished,
             this, &MainWindow::replyFinished);
@@ -140,7 +139,7 @@ void MainWindow::openSettings()
     SettingsDialog * dialog = new SettingsDialog(this);
     dialog->setPairs(pairs.join(","));
     dialog->setAPIKey(APIKey);
-    dialog->setAttribute(Qt::WA_TranslucentBackground);
+//    dialog->setAttribute(Qt::WA_TranslucentBackground);
     connect(dialog,&SettingsDialog::accepted,[=](){
         APIKey = dialog->getAPIKey();
         pairs = dialog->getPairs().split(",");
